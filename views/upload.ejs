@@ -1,0 +1,46 @@
+<%- include('global/header.ejs') %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 text-center">
+        <h2>Upload File</h2>
+        <form id="uploadForm">
+          <input class="form-control mb-4" type="file" id="fileInput" name="file">
+          <button class="btn btn-lg btn-primary" type="button" id="uploadBtn">Upload</button>
+        </form>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+
+  <%- include('global/footer.ejs') %>
+
+  <script>
+    $(document).ready(function () {
+      $('#uploadBtn').click(function () {
+        const fileInput = $('#fileInput')[0].files[0];
+        if (!fileInput) {
+          alert('Please select a file.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput);
+
+        $.ajax({
+          url: '/upload',
+          type: 'POST',
+          data: formData,
+          processData: false, // Prevent jQuery from automatically transforming the data
+          contentType: false, // Prevent jQuery from setting contentType header
+          success: function (response) {
+            alert('File uploaded successfully!');
+          },
+          error: function (err) {
+            alert('Error uploading file.');
+            console.log(err);
+          }
+        });
+      });
+    });
+  </script>

@@ -1,0 +1,28 @@
+<%- include('global/header.ejs') %> 
+  <div class="container text-center">
+    <ul>
+      <% for (var i=0; i < files.length; i++) { %>
+        <li>
+          <strong><%= i+1 %>.</strong>
+          <%= files[i].name %>
+          <a id="download-item" data-path="<%= files[i].path %>"><span class="icon-cloud-download"></span></a>
+        </li>
+      <% } %>
+    </ul>
+    <a id="download-button" style="display: none;" href="#" target="_blank" class="btn btn-success"><span class="icon-cloud-download"></span> Download Now</a>
+  </div>
+<%- include('global/footer.ejs') %> 
+<script>
+const button = document.querySelectorAll('#download-item');
+button.forEach(item => {
+  item.addEventListener('click', () => {
+    const itemPath = item.getAttribute('data-path');
+    // allow download
+    let downloadButton = document.querySelector("#download-button");
+    downloadButton.style.display = 'block';
+    downloadButton.setAttribute('href', itemPath)
+  })
+})
+
+
+</script>
